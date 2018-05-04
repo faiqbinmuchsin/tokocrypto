@@ -6,13 +6,26 @@ import TableBalance from '../../component/balance';
 import Order from '../../component/order';
 import TableHistory from '../../component/history';
 
+import { connect } from "react-redux";
+import { homeActions, homeSelectors } from "../../redux/page/home";
 import {
     Row,
     Col
 } from 'reactstrap';
 
 class Home extends Component{
+    componentDidMount() {
+        const {
+            isCryptosFetched,
+            onPageEnter
+        } = this.props;
+
+        if (onPageEnter) {
+            onPageEnter(isCryptosFetched);
+        }
+    }
     render(){
+        const {cryptos} = this.props;
         return(
             <div className="row">
                 <div className="col-md-9">
@@ -42,4 +55,17 @@ class Home extends Component{
     }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    cryptos: homeSelectors.selectCryptosData(state),
+    isCryptosFetched: homeSelectors.isCryptosFetched(state)
+});
+
+const mapDispatchToProps = dispatch => ({
+    onPageEnter: (isCryptosFetched) => {
+        if (!isCryptosFetched) {
+            dispatch(homeActions.getCryptos());
+        }
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
