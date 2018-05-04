@@ -1,0 +1,8 @@
+.order__form{
+    font-size: 10px;
+    height: 100%;
+}
+.buy__form, .sell__form{
+    border-left: 1px solid;
+    border-right: 1px solid;
+}

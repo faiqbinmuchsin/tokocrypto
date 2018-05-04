@@ -1,0 +1,23 @@
+.table__balance {
+    height: 54.2em;
+    max-height: 54.2em;
+}
+.table__crypto, .order__part, .history__part, .table__balance{
+    border: 1px solid;
+}
+.order__part, .history__part {
+    height: 10.6em;
+}
+.table__crypto{
+    height: 40em;
+    max-height: 40em;
+}
+.table__crypto, .table__balance, .history__part{
+    font-size: 12px;
+    overflow-y: scroll;
+}
+.history__part{
+    height: 14.2em;
+    max-height: 14.2em;
+    /* overflow-x: scroll; */
+}
