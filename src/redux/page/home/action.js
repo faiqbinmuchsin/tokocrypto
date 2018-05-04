@@ -1,11 +1,14 @@
 import { cryptosActions as cryptosActionsGenerator } from "../../common/cryptos";
 import { balanceActions as balanceActionsGenerator } from "../../common/balance";
+import { historyActions as historyActionsGenerator } from "../../common/history";
 
 import CryptosAPI from "../../../api/cryptos";
 import BalanceAPI from "../../../api/balance";
+import HistoryAPI from "../../../api/history";
 
 const cryptosActions = cryptosActionsGenerator("home/cryptos");
 const balanceActions = balanceActionsGenerator("home/balance");
+const historyActions = historyActionsGenerator("home/history");
 
 const getCryptos = () => dispatch => {
     dispatch(cryptosActions.getCryptosLoading());
@@ -29,9 +32,22 @@ const getBalance = () => dispatch => {
         });
 };
 
+const getHistory = () => dispatch => {
+    dispatch(historyActions.getHistoryLoading());
+    return HistoryAPI.getHistory()
+        .then(response => {
+            dispatch(historyActions.getHistorySuccess(response));
+        })
+        .catch(err => {
+            dispatch(historyActions.getHistoryError());
+        });
+};
+
 export default {
     ...cryptosActions,
     ...balanceActions,
+    ...historyActions,
     getCryptos,
-    getBalance
+    getBalance,
+    getHistory
 };

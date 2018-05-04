@@ -14,16 +14,17 @@ class Home extends Component{
         const {
             isCryptosFetched,
             isBalanceFetched,
+            isHistoryFetched,
             onPageEnter
         } = this.props;
 
         if (onPageEnter) {
-            onPageEnter(isCryptosFetched, isBalanceFetched);
+            onPageEnter(isCryptosFetched, isBalanceFetched, isHistoryFetched);
         }
     }
     render(){
-        const {cryptos, balance} = this.props;
-        
+        const {cryptos, balance, history} = this.props;
+        // console.log(cryptos.length)
         return(
             <div className="row">
                 <div className="col-md-9">
@@ -37,7 +38,7 @@ class Home extends Component{
                             <Order />
                         </div>
                         <div className="col-md-6 history__part">
-                            <TableHistory />
+                            <TableHistory history={history} />
                         </div>
                     </div>
                 </div>
@@ -56,17 +57,22 @@ class Home extends Component{
 const mapStateToProps = state => ({
     cryptos: homeSelectors.selectCryptosData(state),
     balance: homeSelectors.selectBalanceData(state),
+    history: homeSelectors.selectHistoryData(state),
     isCryptosFetched: homeSelectors.isCryptosFetched(state),
-    isBalanceFetched: homeSelectors.isBalanceFetched(state)
+    isBalanceFetched: homeSelectors.isBalanceFetched(state),
+    isHistoryFetched: homeSelectors.isHistoryFetched(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    onPageEnter: (isCryptosFetched, isBalanceFetched) => {
+    onPageEnter: (isCryptosFetched, isBalanceFetched, isHistoryFetched) => {
         if (!isCryptosFetched) {
             dispatch(homeActions.getCryptos());
         }
         if (!isBalanceFetched) {
             dispatch(homeActions.getBalance());
+        }
+        if (!isHistoryFetched) {
+            dispatch(homeActions.getHistory());
         }
     }
 });
