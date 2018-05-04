@@ -1,24 +1,37 @@
 import React from 'react';
+import numeral from 'numeral';
 import './crypto-table.css';
 import {
     Table
 } from 'reactstrap';
 
-const RowData = ({data}) => (
-    data.map((item) => (
-        <tr key={item.id}>
-            <td>{item.rank}</td>
-            <td>{item.name}</td>
-            <td>{item.symbol}</td>
-            <td>{item.price}</td>
-            <td>{item.one_hr}</td>
-            <td>{item.one_day}</td>
-            <td>{item.one_week}</td>
-        </tr>
-    ))
-);
+const DataBadge = ({data}) => (
+    <div>
+        {(data < 0 ) ?
+        <span className="badge badge-danger">{data}%</span> :
+        <span className="badge badge-success">{data}%</span>}
+    </div>
+)
 
-const TableCrypto = () => (
+const RowData = ({data}) => (
+    <tr>
+        <td>{data.rank}</td>
+        <td>{data.name}</td>
+        <td>{data.symbol}</td>
+        <td>Rp. {numeral(data.quotes.IDR.price).format('0,0')}</td>
+        <td>
+            <DataBadge data={data.quotes.IDR.percent_change_1h} />
+        </td>
+        <td>
+            <DataBadge data={data.quotes.IDR.percent_change_24h} />
+        </td>
+        <td>
+            <DataBadge data={data.quotes.IDR.percent_change_7d} />
+        </td>
+    </tr>
+)
+
+const TableCrypto = ({cryptos}) => (
     <div>
         <Table responsive>
             <thead>
@@ -33,63 +46,17 @@ const TableCrypto = () => (
                 </tr>
             </thead>
             <tbody>
-                <RowData data={Data} />
+                {
+                    cryptos.data ? 
+                    Object.keys(cryptos.data).map(function(crypto, index) {
+                        return(
+                            <RowData data={cryptos.data[crypto]} key={index} />
+                        )
+                    }) : null
+                }
             </tbody>
         </Table>
     </div>
 );
 
 export default TableCrypto;
-
-const Data = [
-    {
-        id:"1",
-        rank:"1",
-        name:"Bitcoin",
-        symbol:"BTC",
-        price:"120000000",
-        one_hr:"0.12",
-        one_day:"-1.2",
-        one_week:"2.5"
-    },
-    {
-        id:"2",
-        rank:"1",
-        name:"Bitcoin",
-        symbol:"BTC",
-        price:"120000000",
-        one_hr:"0.12",
-        one_day:"-1.2",
-        one_week:"2.5"
-    },
-    {
-        id:"3",
-        rank:"1",
-        name:"Bitcoin",
-        symbol:"BTC",
-        price:"120000000",
-        one_hr:"0.12",
-        one_day:"-1.2",
-        one_week:"2.5"
-    },
-    {
-        id:"4",
-        rank:"1",
-        name:"Bitcoin",
-        symbol:"BTC",
-        price:"120000000",
-        one_hr:"0.12",
-        one_day:"-1.2",
-        one_week:"2.5"
-    },
-    {
-        id:"5",
-        rank:"1",
-        name:"Bitcoin",
-        symbol:"BTC",
-        price:"120000000",
-        one_hr:"0.12",
-        one_day:"-1.2",
-        one_week:"2.5"
-    },
-];

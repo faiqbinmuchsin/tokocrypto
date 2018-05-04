@@ -18,10 +18,10 @@ const OrderForm = () => (
 
 const Order = () => (
     <div className="row order__form">
-        <div className="col-md-6 buy__form">
+        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 buy__form">
             <OrderForm />
         </div>
-        <div className="col-md-6 sell__form">
+        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 sell__form">
             <OrderForm />
         </div>
     </div>
