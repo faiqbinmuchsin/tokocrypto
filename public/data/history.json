@@ -1,0 +1,11 @@
+[
+    {
+        "type":"sell",   
+        "from":0.1,
+        "from_symbol":"BTC",
+        "to":12000000,
+        "to_symbol":"IDR",
+        "price_at":120000000,
+        "time": "04-05-2016"
+    }
+]

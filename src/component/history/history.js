@@ -1,22 +1,41 @@
 import React from 'react';
+import numeral from 'numeral';
 import './history.css';
 import {
     Table
 } from 'reactstrap';
 
-const RowData = ({data}) => (
-    data.map((item) => (
-        <tr key={item.id}>
-            <td>{item.type}</td>
-            <td>{item.from}</td>
-            <td>{item.to}</td>
-            <td>{item.price}</td>
-            <td>{item.time}</td>
-        </tr>
-    ))
-);
+const DataBadge = ({data}) => (
+    <div>
+        {(data === "sell" ) ?
+        <span className="badge badge-danger">{data}</span> :
+        <span className="badge badge-success">{data}</span>}
+    </div>
+)
 
-const TableHistory = () => (
+const DataNumConv = ({data, symbol}) => (
+    <div>
+        {(symbol === "IDR" ) ?
+        <span>Rp. {numeral(data).format('0,0')}</span> :
+        <span>{data} {symbol}</span>}
+    </div>
+)
+
+const RowData = ({data}) => (
+    <tr>
+        <td><DataBadge data={data.type} /></td>
+        <td>
+            <DataNumConv data={data.from} symbol={data.from_symbol} />
+        </td>
+        <td>
+            <DataNumConv data={data.to} symbol={data.to_symbol} />
+        </td>
+        <td>Rp. {numeral(data.price_at).format('0,0')}</td>
+        <td>{data.time}</td>
+    </tr>
+)
+
+const TableHistory = ({history}) => (
     <div>
         <Table responsive>
             <thead>
@@ -29,38 +48,17 @@ const TableHistory = () => (
                 </tr>
             </thead>
             <tbody>
-                <RowData data={Data} />
+                {
+                    (history) ?
+                    (Object.keys(history).map((item, index) => {
+                        return(
+                            <RowData data={history[item]} key={index} />
+                        )
+                    })) : (null)
+                }
             </tbody>
         </Table>
     </div>
 );
 
 export default TableHistory;
-
-const Data = [
-    {
-        id:"1",
-        type:"Buy",
-        from:"1,000,000 IDR",
-        to:"0.00012 BTC",
-        price:"120,000,000",
-        time:"20-04-2018 21:30"
-    },
-    {
-        id:"2",
-        type:"Sell",
-        from:"1,000,000 IDR",
-        to:"0.00012 BTC",
-        price:"120,000,000",
-        time:"20-04-2018 21:30"
-    },
-    {
-        id:"3",
-        type:"Buy",
-        from:"1,000,000 IDR",
-        to:"0.00012 BTC",
-        price:"120,000,000",
-        time:"20-04-2018 21:30"
-    },
-    
-];

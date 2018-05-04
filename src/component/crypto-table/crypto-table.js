@@ -47,8 +47,8 @@ const TableCrypto = ({cryptos}) => (
             </thead>
             <tbody>
                 {
-                    cryptos.data ? 
-                    Object.keys(cryptos.data).map(function(crypto, index) {
+                    cryptos.data ?
+                    Object.keys(cryptos.data).map((crypto, index) => {
                         return(
                             <RowData data={cryptos.data[crypto]} key={index} />
                         )
