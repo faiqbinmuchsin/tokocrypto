@@ -9,10 +9,10 @@ const getCryptos = () => dispatch => {
     return CryptosAPI.getCryptos()
         .then(response => {
             dispatch(cryptosActions.getCryptosSuccess(response));
-            console.log(response);
+            // console.log(response);
         })
         .catch(err => {
-            console.error(err);
+            // console.error(err);
             dispatch(cryptosActions.getCryptosError());
         });
 };

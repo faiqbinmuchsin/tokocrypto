@@ -26,12 +26,15 @@ class Home extends Component{
     }
     render(){
         const {cryptos} = this.props;
+        // console.log(cryptos);
+        // console.log(this.props);
+        
         return(
             <div className="row">
                 <div className="col-md-9">
                     <div className="row">
                         <div className="col-md-12 table__crypto">
-                            <TableCrypto />
+                            <TableCrypto cryptos={cryptos} />
                         </div>
                     </div>
                     <div className="row">

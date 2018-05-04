@@ -15,6 +15,9 @@ const cryptosActionHandler = guardedInitialState => ({
         ...state,
         status: "success",
         cryptos: action.cryptos
+        // cryptos: [...action.cryptos]
+        // cryptos: {...action.cryptos.data}
+        // cryptos: {...action.cryptos}
         // image: [...state.image, ...action.image]
     })
 });
