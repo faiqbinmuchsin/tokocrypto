@@ -8,26 +8,21 @@ import TableHistory from '../../component/history';
 
 import { connect } from "react-redux";
 import { homeActions, homeSelectors } from "../../redux/page/home";
-import {
-    Row,
-    Col
-} from 'reactstrap';
 
 class Home extends Component{
     componentDidMount() {
         const {
             isCryptosFetched,
+            isBalanceFetched,
             onPageEnter
         } = this.props;
 
         if (onPageEnter) {
-            onPageEnter(isCryptosFetched);
+            onPageEnter(isCryptosFetched, isBalanceFetched);
         }
     }
     render(){
-        const {cryptos} = this.props;
-        // console.log(cryptos);
-        // console.log(this.props);
+        const {cryptos, balance} = this.props;
         
         return(
             <div className="row">
@@ -49,7 +44,7 @@ class Home extends Component{
                 <div className="col-md-3">
                     <div className="row">
                         <div className="col-md-12 table__balance">
-                            <TableBalance />
+                            <TableBalance balance={balance} />
                         </div>
                     </div>
                 </div>
@@ -60,13 +55,18 @@ class Home extends Component{
 
 const mapStateToProps = state => ({
     cryptos: homeSelectors.selectCryptosData(state),
-    isCryptosFetched: homeSelectors.isCryptosFetched(state)
+    balance: homeSelectors.selectBalanceData(state),
+    isCryptosFetched: homeSelectors.isCryptosFetched(state),
+    isBalanceFetched: homeSelectors.isBalanceFetched(state)
 });
 
 const mapDispatchToProps = dispatch => ({
-    onPageEnter: (isCryptosFetched) => {
+    onPageEnter: (isCryptosFetched, isBalanceFetched) => {
         if (!isCryptosFetched) {
             dispatch(homeActions.getCryptos());
+        }
+        if (!isBalanceFetched) {
+            dispatch(homeActions.getBalance());
         }
     }
 });
