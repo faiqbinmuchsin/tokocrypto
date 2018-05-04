@@ -2,19 +2,19 @@ import { reducerGenerator } from "../../../util/redux";
 import initialState from "./initial-state";
 import types from "./type";
 
-const cryptosActionHandler = guardedInitialState => ({
-    [types.GET_CRYPTOS_LOADING]: state => ({
+const balanceActionHandler = guardedInitialState => ({
+    [types.GET_BALANCE_LOADING]: state => ({
         ...state,
         status: "loading"
     }),
-    [types.GET_CRYPTOS_ERROR]: state => ({
+    [types.GET_BALANCE_ERROR]: state => ({
         ...state,
         status: "error"
     }),
-    [types.GET_CRYPTOS_SUCCESS]: (state, action) => ({
+    [types.GET_BALANCE_SUCCESS]: (state, action) => ({
         ...state,
         status: "success",
-        cryptos: action.cryptos
+        balance: action.balance
     })
 });
 
@@ -22,7 +22,7 @@ const reducer = (pageName, pageInitialState) => {
     const guardedInitialState = pageInitialState || initialState;
     return reducerGenerator(
         pageName,
-        cryptosActionHandler(guardedInitialState),
+        balanceActionHandler(guardedInitialState),
         guardedInitialState
     );
 };
